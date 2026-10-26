@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="StockPro — gestão profissional de estoque, produtos, fornecedores e movimentações.">
+    <meta name="theme-color" content="#2563eb">
+    <title>StockPro - Gestão de Estoque</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <noscript>O StockPro precisa do JavaScript ativado para funcionar.</noscript>
+
+    <!-- ===================== LOGIN ===================== -->
+    <div id="telaLogin" class="login-container">
+        <aside class="login-brand" aria-hidden="true">
+            <div class="login-brand-conteudo">
+                <div class="login-brand-logo">
+                    <svg viewBox="0 0 64 64" width="44" height="44">
+                        <rect width="64" height="64" rx="14" fill="#fff" fill-opacity=".16"/>
+                        <rect x="14" y="18" width="14" height="28" rx="3" fill="#fff"/>
+                        <rect x="32" y="26" width="18" height="20" rx="3" fill="#bfdbfe"/>
+                    </svg>
+                    <span>StockPro</span>
+                </div>
+                <h2>Controle total do seu estoque, em um só lugar.</h2>
+                <ul>
+                    <li><span data-icon="check"></span> Produtos com foto, SKU e custo</li>
+                    <li><span data-icon="check"></span> Entradas, saídas e ajustes rastreáveis</li>
+                    <li><span data-icon="check"></span> Alertas de estoque baixo em tempo real</li>
+                    <li><span data-icon="check"></span> Relatórios e exportação de dados</li>
+                </ul>
+            </div>
+        </aside>
+
+        <div class="login-painel">
+            <div class="login-box">
+                <div class="login-logo" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" width="64" height="64" role="img">
+                        <rect width="64" height="64" rx="16" fill="#2563eb"/>
+                        <rect x="14" y="18" width="14" height="28" rx="3" fill="#fff" opacity=".95"/>
+                        <rect x="32" y="26" width="18" height="20" rx="3" fill="#bfdbfe"/>
+                        <rect x="18" y="14" width="6" height="6" rx="1" fill="#93c5fd"/>
+                    </svg>
+                </div>
+                <h1>Bem-vindo ao StockPro</h1>
+                <p class="login-subtitulo">Entre com sua conta para acessar o sistema</p>
+
+                <form id="formLogin" novalidate>
+                    <div class="campo">
+                        <label for="loginEmail">E-mail</label>
+                        <input type="email" id="loginEmail" placeholder="voce@empresa.com" autocomplete="username" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="loginSenha">Senha</label>
+                        <div class="senha-container">
+                            <input type="password" id="loginSenha" placeholder="Digite sua senha" autocomplete="current-password" required>
+                            <button type="button" id="btnMostrarSenha" aria-label="Mostrar senha" aria-pressed="false"></button>
+                        </div>
+                    </div>
+
+                    <div class="login-opcoes">
+                        <label class="check-inline"><input type="checkbox" id="lembrarLogin"> Lembrar de mim</label>
+                        <button type="button" id="btnEsqueciSenha" class="link-button">Esqueci minha senha</button>
+                    </div>
+
+                    <button type="submit" class="btn-login">Entrar</button>
+                    <p id="mensagemLogin" class="mensagem-login" role="status" aria-live="polite"></p>
+                </form>
+
+                <div class="login-demo">
+                    <strong>Acesso de demonstração</strong>
+                    <span>E-mail: <code>admin@stockpro.com</code></span>
+                    <span>Senha: <code>123456</code></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== SISTEMA ===================== -->
+    <div id="sistemaPrincipal" class="sistema-principal">
+        <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+        <aside class="sidebar" id="sidebar">
+            <div class="logo-sidebar">
+                <svg viewBox="0 0 64 64" width="38" height="38" aria-hidden="true">
+                    <rect width="64" height="64" rx="14" fill="#2563eb"/>
+                    <rect x="14" y="18" width="14" height="28" rx="3" fill="#fff"/>
+                    <rect x="32" y="26" width="18" height="20" rx="3" fill="#bfdbfe"/>
+                </svg>
+                <div class="logo-textos">
+                    <span>StockPro</span>
+                    <small id="nomeEmpresaSidebar">Gestão de estoque</small>
+                </div>
+            </div>
+
+            <nav class="menu" aria-label="Menu principal">
+                <button type="button" class="menu-item ativo" data-pagina="dashboard"><span class="icone" data-icon="dashboard"></span><span>Dashboard</span></button>
+                <button type="button" class="menu-item" data-pagina="produtos"><span class="icone" data-icon="box"></span><span>Produtos</span></button>
+                <button type="button" class="menu-item" data-pagina="estoque"><span class="icone" data-icon="layers"></span><span>Estoque</span></button>
+                <button type="button" class="menu-item" data-pagina="movimentacoes"><span class="icone" data-icon="repeat"></span><span>Movimentações</span></button>
+                <button type="button" class="menu-item" data-pagina="fornecedores"><span class="icone" data-icon="truck"></span><span>Fornecedores</span></button>
+                <button type="button" class="menu-item" data-pagina="relatorios"><span class="icone" data-icon="chart"></span><span>Relatórios</span></button>
+                <button type="button" class="menu-item" data-pagina="configuracoes"><span class="icone" data-icon="sliders"></span><span>Configurações</span></button>
+            </nav>
+
+            <div class="usuario-sidebar">
+                <div class="avatar" id="avatarUsuario">A</div>
+                <div class="usuario-info">
+                    <strong id="nomeUsuario">Administrador</strong>
+                    <span id="cargoUsuario">Administrador</span>
+                </div>
+                <button type="button" id="btnLogout" class="btn-logout" title="Sair" aria-label="Sair"></button>
+            </div>
+        </aside>
+
+        <main class="conteudo">
+            <button type="button" id="btnMenu" class="btn-menu" aria-label="Abrir menu"></button>
+
+            <!-- Dashboard -->
+            <section id="pagina-dashboard" class="pagina ativa">
+                <div class="cabecalho-pagina">
+                    <div>
+                        <h1>Dashboard</h1>
+                        <p>Visão geral da operação do seu estoque.</p>
+                    </div>
+                    <button type="button" class="btn-principal" id="btnNovoProdutoDashboard"><span class="icone" data-icon="plus"></span> Novo produto</button>
+                </div>
+
+                <div class="cards">
+                    <div class="card"><div class="card-icone card-azul" data-icon="box"></div><div><span>Produtos</span><strong id="totalProdutos">0</strong></div></div>
+                    <div class="card"><div class="card-icone card-verde" data-icon="dollar"></div><div><span>Valor em estoque</span><strong id="valorEstoque">R$ 0,00</strong></div></div>
+                    <div class="card"><div class="card-icone card-laranja" data-icon="alert"></div><div><span>Estoque baixo</span><strong id="estoqueBaixo">0</strong></div></div>
+                    <div class="card"><div class="card-icone card-roxo" data-icon="repeat"></div><div><span>Movimentações</span><strong id="totalMovimentacoes">0</strong></div></div>
+                </div>
+
+                <div class="acoes-rapidas">
+                    <div class="titulo-secao"><h2>Ações rápidas</h2></div>
+                    <div class="acoes-grid">
+                        <button type="button" id="btnCadastrarProduto"><span class="acao-icone" data-icon="plus"></span><span>Cadastrar produto</span></button>
+                        <button type="button" id="btnEntradaEstoque"><span class="acao-icone acao-verde" data-icon="arrowDown"></span><span>Entrada de estoque</span></button>
+                        <button type="button" id="btnSaidaEstoque"><span class="acao-icone acao-laranja" data-icon="arrowUp"></span><span>Saída de estoque</span></button>
+                        <button type="button" id="btnGerarRelatorio"><span class="acao-icone acao-roxo" data-icon="file"></span><span>Ver relatórios</span></button>
+                    </div>
+                </div>
+
+                <div class="secao">
+                    <div class="titulo-secao">
+                        <h2>Produtos recentes</h2>
+                        <button type="button" class="link-secao" data-ir="produtos">Ver todos</button>
+                    </div>
+                    <div class="tabela-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Foto</th>
+                                    <th>Produto</th>
+                                    <th>SKU</th>
+                                    <th>Categoria</th>
+                                    <th class="num">Estoque</th>
+                                    <th class="num">Custo</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaProdutosDashboard"></tbody>
+                        </table>
+                        <div id="mensagemProdutosDashboard" class="tabela-vazia">Nenhum produto cadastrado.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Produtos -->
+            <section id="pagina-produtos" class="pagina">
+                <div class="cabecalho-pagina">
+                    <div>
+                        <h1>Produtos</h1>
+                        <p>Cadastre, edite e acompanhe seus produtos.</p>
+                    </div>
+                    <button type="button" class="btn-principal" id="btnNovoProdutoPagina"><span class="icone" data-icon="plus"></span> Novo produto</button>
+                </div>
+
+                <div class="barra-ferramentas">
+                    <div class="campo-pesquisa">
+                        <span data-icon="search"></span>
+                        <input id="buscaProduto" type="search" placeholder="Buscar por nome, SKU ou categoria..." aria-label="Buscar produtos">
+                    </div>
+                    <select id="filtroCategoria" aria-label="Filtrar por categoria"><option value="">Todas as categorias</option></select>
+                    <select id="filtroStatus" aria-label="Filtrar por status">
+                        <option value="">Todos os status</option>
+                        <option value="normal">Estoque normal</option>
+                        <option value="baixo">Estoque baixo</option>
+                        <option value="sem">Sem estoque</option>
+                    </select>
+                </div>
+
+                <div class="secao">
+                    <div class="tabela-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Foto</th>
+                                    <th>Produto</th>
+                                    <th>SKU</th>
+                                    <th>Categoria</th>
+                                    <th>Fornecedor</th>
+                                    <th class="num">Estoque</th>
+                                    <th class="num">Custo</th>
+                                    <th>Status</th>
+                                    <th class="acoes-col">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaProdutos"></tbody>
+                        </table>
+                        <div id="mensagemProdutos" class="tabela-vazia">Nenhum produto cadastrado.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Estoque -->
+            <section id="pagina-estoque" class="pagina">
+                <div class="cabecalho-pagina">
+                    <div>
+                        <h1>Estoque</h1>
+                        <p>Controle rápido de níveis, custos e alertas.</p>
+                    </div>
+                    <button type="button" class="btn-principal" id="btnNovaMovimentacaoEstoque"><span class="icone" data-icon="repeat"></span> Movimentar estoque</button>
+                </div>
+
+                <div class="estoque-alerta" id="painelAlertaEstoque" role="status"></div>
+
+                <div class="cards cards-compactos">
+                    <div class="mini-card"><span>Unidades em estoque</span><strong id="totalUnidades">0</strong></div>
+                    <div class="mini-card"><span>Custo total</span><strong id="custoTotalEstoque">R$ 0,00</strong></div>
+                    <div class="mini-card"><span>Itens abaixo do mínimo</span><strong id="itensCriticos">0</strong></div>
+                </div>
+
+                <div class="secao">
+                    <div class="titulo-secao"><h2>Posição do estoque</h2></div>
+                    <div class="tabela-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Produto</th>
+                                    <th>SKU</th>
+                                    <th class="num">Estoque atual</th>
+                                    <th class="num">Mínimo</th>
+                                    <th>Disponibilidade</th>
+                                    <th class="acoes-col">Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaEstoque"></tbody>
+                        </table>
+                        <div id="mensagemEstoque" class="tabela-vazia">Nenhum produto cadastrado.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Movimentações -->
+            <section id="pagina-movimentacoes" class="pagina">
+                <div class="cabecalho-pagina">
+                    <div>
+                        <h1>Movimentações</h1>
+                        <p>Registre entradas, saídas e ajustes com rastreabilidade.</p>
+                    </div>
+                    <button type="button" class="btn-principal" id="btnNovaMovimentacao"><span class="icone" data-icon="plus"></span> Nova movimentação</button>
+                </div>
+
+                <div class="movimentacao-resumo">
+                    <div class="resumo-entrada"><span>Entradas</span><strong id="resumoEntradas">0</strong><small>registros</small></div>
+                    <div class="resumo-saida"><span>Saídas</span><strong id="resumoSaidas">0</strong><small>registros</small></div>
+                    <div class="resumo-ajuste"><span>Ajustes</span><strong id="resumoAjustes">0</strong><small>registros</small></div>
+                </div>
+
+                <div class="barra-ferramentas">
+                    <div class="campo-pesquisa">
+                        <span data-icon="search"></span>
+                        <input id="buscaMovimentacao" type="search" placeholder="Buscar produto, motivo ou usuário..." aria-label="Buscar movimentações">
+                    </div>
+                    <select id="filtroMovimentacao" aria-label="Filtrar por tipo">
+                        <option value="todos">Todas</option>
+                        <option value="entrada">Entradas</option>
+                        <option value="saida">Saídas</option>
+                        <option value="ajuste">Ajustes</option>
+                    </select>
+                </div>
+
+                <div class="secao">
+                    <div class="tabela-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Tipo</th>
+                                    <th>Produto</th>
+                                    <th class="num">Quantidade</th>
+                                    <th class="num">Saldo</th>
+                                    <th>Motivo</th>
+                                    <th>Usuário</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaMovimentacoes"></tbody>
+                        </table>
+                        <div id="mensagemMovimentacoes" class="tabela-vazia">Nenhuma movimentação registrada.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Fornecedores -->
+            <section id="pagina-fornecedores" class="pagina">
+                <div class="cabecalho-pagina">
+                    <div>
+                        <h1>Fornecedores</h1>
+                        <p>Gerencie parceiros, contatos e relacionamento de compras.</p>
+                    </div>
+                    <button type="button" class="btn-principal" id="btnNovoFornecedor"><span class="icone" data-icon="plus"></span> Novo fornecedor</button>
+                </div>
+                <div class="barra-ferramentas">
+                    <div class="campo-pesquisa">
+                        <span data-icon="search"></span>
+                        <input id="buscaFornecedor" type="search" placeholder="Buscar fornecedor, CNPJ ou e-mail..." aria-label="Buscar fornecedores">
+                    </div>
+                </div>
+                <div id="listaFornecedores" class="fornecedores-grid"></div>
+            </section>
+
+            <!-- Relatórios -->
+            <section id="pagina-relatorios" class="pagina">
+                <div class="cabecalho-pagina">
+                    <div>
+                        <h1>Relatórios</h1>
+                        <p>Resumo operacional e exportação dos dados.</p>
+                    </div>
+                    <button type="button" class="btn-principal" id="btnExportarDados"><span class="icone" data-icon="download"></span> Exportar planilha (CSV)</button>
+                </div>
+
+                <div class="relatorio-grid">
+                    <div class="relatorio-box">
+                        <h2>Resumo do estoque</h2>
+                        <div class="relatorio-item"><span>Produtos cadastrados</span><strong id="relatorioProdutos">0</strong></div>
+                        <div class="relatorio-item"><span>Unidades em estoque</span><strong id="relatorioUnidades">0</strong></div>
+                        <div class="relatorio-item"><span>Valor do estoque</span><strong id="relatorioValor">R$ 0,00</strong></div>
+                        <div class="relatorio-item"><span>Produtos abaixo do mínimo</span><strong id="relatorioBaixo">0</strong></div>
+                    </div>
+                    <div class="relatorio-box">
+                        <h2>Movimentações</h2>
+                        <div class="relatorio-item"><span>Entradas</span><strong id="relatorioEntradas">0</strong></div>
+                        <div class="relatorio-item"><span>Saídas</span><strong id="relatorioSaidas">0</strong></div>
+                        <div class="relatorio-item"><span>Ajustes</span><strong id="relatorioAjustes">0</strong></div>
+                        <div class="relatorio-item"><span>Total de registros</span><strong id="relatorioTotalMov">0</strong></div>
+                    </div>
+                </div>
+
+                <div class="secao secao-padding">
+                    <div class="titulo-secao"><h2>Exportação</h2></div>
+                    <p class="texto-ajuda">Baixe um arquivo JSON com produtos, fornecedores, movimentações e configurações. Útil como backup dos dados salvos neste navegador.</p>
+                    <button type="button" class="btn-secundario" id="btnExportarJson"><span class="icone" data-icon="download"></span> Baixar backup JSON</button>
+                </div>
+            </section>
+
+            <!-- Configurações -->
+            <section id="pagina-configuracoes" class="pagina">
+                <div class="cabecalho-pagina">
+                    <div>
+                        <h1>Configurações</h1>
+                        <p>Personalize a operação e os alertas do StockPro.</p>
+                    </div>
+                </div>
+
+                <div class="configuracoes-layout">
+                    <div class="configuracoes-box">
+                        <div class="box-cabecalho">
+                            <div>
+                                <h2>Dados da empresa</h2>
+                                <p>Informações exibidas e usadas pelo sistema.</p>
+                            </div>
+                        </div>
+                        <form id="formConfiguracoes">
+                            <div class="form-duplo">
+                                <div class="campo"><label for="empresaNome">Nome da empresa</label><input id="empresaNome" type="text" placeholder="Minha empresa" autocomplete="organization"></div>
+                                <div class="campo"><label for="empresaCNPJ">CNPJ</label><input id="empresaCNPJ" type="text" inputmode="numeric" placeholder="00.000.000/0000-00" maxlength="18"></div>
+                            </div>
+                            <div class="form-duplo">
+                                <div class="campo"><label for="empresaTelefone">Telefone</label><input id="empresaTelefone" type="text" inputmode="numeric" placeholder="(00) 00000-0000" maxlength="16" autocomplete="tel"></div>
+                                <div class="campo"><label for="empresaEmail">E-mail</label><input id="empresaEmail" type="email" placeholder="empresa@email.com"></div>
+                            </div>
+                            <div class="campo"><label for="empresaEndereco">Endereço</label><input id="empresaEndereco" type="text" placeholder="Rua, número, cidade - UF" autocomplete="street-address"></div>
+                            <label class="switch-row">
+                                <span>
+                                    <strong>Alertas de estoque baixo</strong>
+                                    <small>Destacar produtos que chegaram ao mínimo configurado.</small>
+                                </span>
+                                <input type="checkbox" id="alertaEstoque">
+                                <span class="switch"></span>
+                            </label>
+                            <button type="submit" class="btn-principal">Salvar configurações</button>
+                        </form>
+                    </div>
+
+                    <div class="configuracoes-box">
+                        <div class="box-cabecalho">
+                            <div>
+                                <h2>Sistema</h2>
+                                <p>Conta e manutenção dos dados.</p>
+                            </div>
+                        </div>
+                        <div class="config-info"><span>Usuário conectado</span><strong id="configUsuario">Administrador</strong></div>
+                        <div class="config-info"><span>Perfil</span><strong>Administrador</strong></div>
+                        <div class="config-info"><span>Moeda</span><strong>Real brasileiro (BRL)</strong></div>
+                        <div class="config-info"><span>Armazenamento</span><strong>Local do navegador</strong></div>
+                        <hr>
+                        <h3>Zona de perigo</h3>
+                        <p class="texto-perigo">Apaga todos os produtos, fornecedores, movimentações e configurações salvos neste navegador.</p>
+                        <button type="button" id="btnLimparDados" class="btn-perigo">Limpar todos os dados</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ===================== MODAIS ===================== -->
+    <div id="modalProduto" class="modal" role="dialog" aria-modal="true" aria-labelledby="tituloModalProduto">
+        <div class="modal-conteudo">
+            <div class="modal-cabecalho">
+                <div>
+                    <span class="modal-kicker">Cadastro</span>
+                    <h2 id="tituloModalProduto">Novo produto</h2>
+                    <p>Preencha os dados e adicione uma foto ao produto.</p>
+                </div>
+                <button type="button" class="btn-fechar" data-fechar-modal="modalProduto" aria-label="Fechar">×</button>
+            </div>
+
+            <form id="formProduto">
+                <input type="hidden" id="produtoId">
+
+                <div class="foto-produto-area">
+                    <div id="previewFoto" class="preview-foto" data-icon="image"></div>
+                    <div class="foto-acoes">
+                        <strong>Foto do produto</strong>
+                        <p>Use uma imagem existente ou a câmera do dispositivo.</p>
+                        <div class="foto-botoes">
+                            <label class="btn-foto"><span class="icone" data-icon="image"></span> Selecionar<input type="file" id="produtoFotoArquivo" accept="image/*" hidden></label>
+                            <label class="btn-foto btn-foto-secundario"><span class="icone" data-icon="camera"></span> Tirar foto<input type="file" id="produtoFotoCamera" accept="image/*" capture="environment" hidden></label>
+                            <button type="button" id="btnRemoverFoto" class="btn-texto">Remover</button>
+                        </div>
+                        <small>A imagem é redimensionada e comprimida automaticamente.</small>
+                    </div>
+                </div>
+
+                <div class="campo"><label for="produtoNome">Nome do produto</label><input id="produtoNome" type="text" placeholder="Ex.: Notebook Dell" maxlength="120" required></div>
+
+                <div class="form-duplo">
+                    <div class="campo"><label for="produtoSKU">SKU</label><input id="produtoSKU" type="text" placeholder="Ex.: NT001" maxlength="40" required></div>
+                    <div class="campo"><label for="produtoCategoria">Categoria</label><input id="produtoCategoria" type="text" list="listaCategorias" placeholder="Ex.: Informática" maxlength="60" required><datalist id="listaCategorias"></datalist></div>
+                </div>
+
+                <div class="form-duplo">
+                    <div class="campo"><label for="produtoEstoque">Estoque atual</label><input id="produtoEstoque" type="number" min="0" step="1" value="0" required></div>
+                    <div class="campo"><label for="produtoMinimo">Estoque mínimo</label><input id="produtoMinimo" type="number" min="0" step="1" value="5" required></div>
+                </div>
+
+                <div class="form-duplo">
+                    <div class="campo"><label for="produtoPreco">Custo unitário (R$)</label><input id="produtoPreco" type="number" min="0" step="0.01" value="0" required></div>
+                    <div class="campo"><label for="produtoFornecedor">Fornecedor</label><select id="produtoFornecedor"><option value="">Nenhum fornecedor</option></select></div>
+                </div>
+
+                <div class="modal-acoes">
+                    <button type="button" class="btn-cancelar" data-fechar-modal="modalProduto">Cancelar</button>
+                    <button type="submit" class="btn-principal" id="btnSalvarProduto">Cadastrar produto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalMovimentacao" class="modal" role="dialog" aria-modal="true" aria-labelledby="tituloModalMovimentacao">
+        <div class="modal-conteudo">
+            <div class="modal-cabecalho">
+                <div>
+                    <span class="modal-kicker">Estoque</span>
+                    <h2 id="tituloModalMovimentacao">Nova movimentação</h2>
+                    <p>Registre uma entrada, saída ou ajuste.</p>
+                </div>
+                <button type="button" class="btn-fechar" data-fechar-modal="modalMovimentacao" aria-label="Fechar">×</button>
+            </div>
+
+            <form id="formMovimentacao">
+                <div class="form-duplo">
+                    <div class="campo">
+                        <label for="movProduto">Produto</label>
+                        <select id="movProduto" required><option value="">Selecione o produto</option></select>
+                    </div>
+                    <div class="campo">
+                        <label for="movTipo">Tipo</label>
+                        <select id="movTipo" required>
+                            <option value="entrada">Entrada</option>
+                            <option value="saida">Saída</option>
+                            <option value="ajuste">Ajuste</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="campo">
+                    <label id="labelMovQuantidade" for="movQuantidade">Quantidade</label>
+                    <input id="movQuantidade" type="number" min="1" step="1" required>
+                </div>
+                <div class="campo">
+                    <label for="movMotivo">Motivo</label>
+                    <select id="movMotivo" required>
+                        <option value="">Selecione um motivo</option>
+                        <option>Compra</option>
+                        <option>Venda</option>
+                        <option>Devolução</option>
+                        <option>Perda</option>
+                        <option>Inventário</option>
+                        <option>Correção de estoque</option>
+                        <option>Outro</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label for="movObservacao">Observação</label>
+                    <textarea id="movObservacao" rows="3" maxlength="300" placeholder="Detalhes opcionais da movimentação..."></textarea>
+                </div>
+
+                <div class="mov-preview" id="movPreview">Selecione um produto para visualizar o saldo.</div>
+
+                <div class="modal-acoes">
+                    <button type="button" class="btn-cancelar" data-fechar-modal="modalMovimentacao">Cancelar</button>
+                    <button type="submit" class="btn-principal">Registrar movimentação</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalFornecedor" class="modal" role="dialog" aria-modal="true" aria-labelledby="tituloModalFornecedor">
+        <div class="modal-conteudo">
+            <div class="modal-cabecalho">
+                <div>
+                    <span class="modal-kicker">Parceiros</span>
+                    <h2 id="tituloModalFornecedor">Novo fornecedor</h2>
+                    <p>Cadastre os dados comerciais do fornecedor.</p>
+                </div>
+                <button type="button" class="btn-fechar" data-fechar-modal="modalFornecedor" aria-label="Fechar">×</button>
+            </div>
+
+            <form id="formFornecedor">
+                <input type="hidden" id="fornecedorId">
+                <div class="campo"><label for="fornecedorEmpresa">Empresa</label><input id="fornecedorEmpresa" type="text" placeholder="Nome da empresa" maxlength="120" required></div>
+                <div class="form-duplo">
+                    <div class="campo"><label for="fornecedorCNPJ">CNPJ</label><input id="fornecedorCNPJ" type="text" inputmode="numeric" placeholder="00.000.000/0000-00" maxlength="18"></div>
+                    <div class="campo"><label for="fornecedorTelefone">Telefone</label><input id="fornecedorTelefone" type="text" inputmode="numeric" placeholder="(00) 00000-0000" maxlength="16"></div>
+                </div>
+                <div class="form-duplo">
+                    <div class="campo"><label for="fornecedorEmail">E-mail</label><input id="fornecedorEmail" type="email" placeholder="contato@empresa.com"></div>
+                    <div class="campo"><label for="fornecedorResponsavel">Responsável</label><input id="fornecedorResponsavel" type="text" placeholder="Nome do responsável" maxlength="80"></div>
+                </div>
+                <div class="campo"><label for="fornecedorObservacao">Observação</label><textarea id="fornecedorObservacao" rows="3" maxlength="300" placeholder="Informações comerciais..."></textarea></div>
+
+                <div class="modal-acoes">
+                    <button type="button" class="btn-cancelar" data-fechar-modal="modalFornecedor">Cancelar</button>
+                    <button type="submit" class="btn-principal" id="btnSalvarFornecedor">Cadastrar fornecedor</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalConfirmar" class="modal modal-pequeno" role="alertdialog" aria-modal="true" aria-labelledby="confirmarTitulo" aria-describedby="confirmarTexto">
+        <div class="modal-conteudo">
+            <div class="confirmar-corpo">
+                <div class="confirmar-icone" data-icon="alert"></div>
+                <h2 id="confirmarTitulo">Confirmar ação</h2>
+                <p id="confirmarTexto"></p>
+            </div>
+            <div class="modal-acoes">
+                <button type="button" class="btn-cancelar" data-fechar-modal="modalConfirmar">Cancelar</button>
+                <button type="button" class="btn-perigo" id="btnConfirmarOk">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
